@@ -1,0 +1,5 @@
+streamlit
+pandas
+pydub
+SpeechRecognition
+multiprocess
