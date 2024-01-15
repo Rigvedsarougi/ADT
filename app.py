@@ -27,19 +27,17 @@ def detect_keywords(input_text, keywords):
     return keyword_presence
 
 def process_audio_chunk(chunk, recognizer):
-    chunk.export("temp.wav", format="wav")
-    with sr.AudioFile("temp.wav") as source:
-        audio_data = recognizer.record(source)
-        try:
+    try:
+        chunk.export("temp.wav", format="wav")
+        with sr.AudioFile("temp.wav") as source:
+            audio_data = recognizer.record(source)
             text = recognizer.recognize_google(audio_data, show_all=True, language='en-US')  # Adjust parameters
             if 'alternative' in text:
                 text = text['alternative'][0]['transcript']
             return text
-        except sr.UnknownValueError:
-            return ""
-        except sr.RequestError as e:
-            logging.error(f"Error with the speech recognition service: {e}")
-            return ""
+    except Exception as e:
+        logging.error(f"Error processing audio chunk: {e}")
+        return ""
 
 def process_audio_file(audio_file, keywords):
     recognizer = sr.Recognizer()
