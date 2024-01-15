@@ -1,5 +1,6 @@
 streamlit
 pandas
 pydub
+AudioSegment
 SpeechRecognition
 multiprocess
